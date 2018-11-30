@@ -1,0 +1,45 @@
+#> InputSetLoader: gvFormat.InputSetLoaderSimpleGVFormat
+
+###########################################################################
+#
+# Sample tests for slt function
+#
+# Author: Zachary Kurmas
+# (C) 2014 Grand Valley State University
+#
+##########################################################################
+
+
+BEGIN sltu
+  INPUTS
+    InputA [0, 1, 2^2-1, 2^3-1]
+    InputB [0, 1, 2^2-1, 2^3-1]
+    Signed 0
+  OUTPUTS
+    LessThan [0, 1, 1, 1,
+              0, 0, 1, 1,
+              0, 0, 0, 1,
+			  0, 0, 0, 0]
+
+BEGIN slt1
+  INPUTS
+    InputA SIGNED(16) [-2^15, -3, 3, 2^15-1]
+    InputB SIGNED(16) [-2^15, -3, 3, 2^15-1]
+	#InputA SIGNED(16) [-6, -7, 6, 7]
+    #InputB SIGNED(16) [-6, -7, 6, 7]
+    Signed 1
+  OUTPUTS
+   LessThan [0, 1, 1, 1,
+             0, 0, 1, 1,
+             0, 0, 0, 1,
+             0, 0, 0, 0]
+			 
+			 
+BEGIN slt2
+  INPUTS
+    InputA SIGNED(16) [-2^14+1]
+    InputB SIGNED(16) [2^14+1]
+    Signed 1
+  OUTPUTS
+   LessThan [1]
+

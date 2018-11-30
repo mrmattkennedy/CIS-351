@@ -1,0 +1,7 @@
+from base 10:
+A(b), b is of length of the number
+s = running total
+111, base 2: s = 1 * (2^2); 4
+s = 1 * (2^1); 2
+s = 1 * (2^0);1
+
