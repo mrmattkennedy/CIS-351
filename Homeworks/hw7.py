@@ -21,14 +21,18 @@ def nWay(hexData, binData, ways):
         print("Ways is not a valid value")
         return
 
-    num_sets = int(blocks / ways)               #number of sets = # blocks / # ways
-    set_bits_size = int(math.log(num_sets, 2))  #set bit size = log base 2 (number of sets)
-    tag_bits_offset = set_bits_size + 2         #00 + set bits
-    tag_size = totalBits - tag_bits_offset      #number of bits in tag = 32 - set bits - 2 (for 00)
+    #number of sets = # blocks / # ways
+    num_sets = int(blocks / ways)               
+    #set bit size = log base 2 (number of sets)
+    set_bits_size = int(math.log(num_sets, 2)) 
+    ##00 + set bits
+    tag_bits_offset = set_bits_size + 2         
+    #number of bits in tag = 32 - set bits - 2 (for 00)
+    tag_size = totalBits - tag_bits_offset      
 
     #no shallow copy method works for cache to most recent, not sure why.
     cache = [[0] * ways for i in range(num_sets)] #create list of lists, set * ways
-    mostRecent = [[0] * ways for i in range(num_sets)] #create list of lists, set * ways
+    mostRecent = [[0] * ways for i in range(num_sets)]
 
     misses = 0
     hits = 0
@@ -46,16 +50,21 @@ def nWay(hexData, binData, ways):
             set = 0
 
         if tag in cache[set]:
+            index = cache[set].index(tag)
+            mostRecent[set][index] += 1
             hitTag = "hit"
             hits += 1 
         else:
             hitTag = "miss"
-            lru = min(mostRecent[set])                                  #least recently used
+            lru = mostRecent[set].index(min(mostRecent[set]))  #index of the set min.
             cache[set][lru] = tag
             mostRecent[set][lru] = ways
-            mostRecent[set][:] = [num - 1 for num in mostRecent[set]]
             misses += 1        
-        print("#" + str(count+1) + ": 0x" + hexData[count] + "/" + num + " at set " + bin(set)[2:].zfill(set_bits_size) + "/" + str(set) + " " + hitTag)
+
+        mostRecent[set][:] = [num - 1 for num in mostRecent[set]]
+        print("#" + str(count+1) + ": 0x" + hexData[count] + "/" + num,
+                " at (base)set (2)" + bin(set)[2:].zfill(set_bits_size) + "/(10)", 
+                str(set) + " " + hitTag)
         count += 1
         for elem in cache:
             print(elem)
@@ -70,19 +79,23 @@ def getData(hexData, binData):
     for num in binData:
         temp = ""
         for way in ways:
-            num_sets = int(blocks / way)                #number of sets = # blocks / # ways
-            set_bits_size = int(math.log(num_sets, 2))  #set bit size = log base 2 (number of sets)
-            tag_bits_offset = set_bits_size + 2         #00 + set bits
-            tag_size = totalBits - tag_bits_offset      #number of bits in tag = 32 - set bits - 2 (for 00)
+            #number of sets = # blocks / # ways
+            num_sets = int(blocks / way)               
+            #set bit size = log base 2 (number of sets)
+            set_bits_size = int(math.log(num_sets, 2)) 
+            ##00 + set bits
+            tag_bits_offset = set_bits_size + 2         
+            #number of bits in tag = 32 - set bits - 2 (for 00)
+            tag_size = totalBits - tag_bits_offset      
             
-            #convert int to binary, shift right to get rid of set and 00, [2:] to remove 0b
+            #convert int to binary, shift right to remove set and 00, [2:] for 0b
             tag = bin(int(num, base) >> tag_bits_offset)[2:].zfill(tag_size)         
             #get rid of 00, take last set_bits_size nums
             set = (bin(int(num, base) >> 2))[-set_bits_size:].zfill(set_bits_size)
 
-            temp += "#Ways: " + str(way) + "\tSet-" + str(set) + "\tTag-" + str(tag) + "\n"
+            temp += "#Ways: "+str(way)+"\tSet-"+str(set) + "\tTag-" + str(tag) + "\n"
 
-        print("#" + str(count+1) + ": 0x" + hexData[count] + " => " + num + "\n" + temp + "\n")
+        print("#"+str(count+1)+": 0x"+hexData[count]+" => "+num+"\n"+temp+"\n")
         count += 1
         
 hexData = ["F000CA7C",
