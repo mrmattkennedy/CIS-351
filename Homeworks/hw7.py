@@ -2,7 +2,7 @@ import math
 import sys
 
 ###############################################
-#                   Cache
+#                    Cache
 #            _____________________
 #           |0xFFFFFFFF|0xFFFFFFFF|
 #           |0xFFFFFFFF|0xFFFFFFFF|
@@ -63,10 +63,9 @@ def nWay(hexData, binData, ways):
     
     print("Hits: " + str(hits))
     print("Misses: " + str(misses))
-
                           
 def getData(hexData, binData):
-    ways = [1, 2, 4]
+    ways = list(map(int, sys.argv[1:]))
     count = 0
     for num in binData:
         temp = ""
@@ -113,7 +112,7 @@ for num in hexData:
     binData.append(temp)
 
 
+getData(hexData, binData)
 print("\n\n")
 for ways in sys.argv[1:]:
        nWay(hexData, binData, int(ways))
-#getData(hexData, binData)
