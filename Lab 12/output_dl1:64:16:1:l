@@ -7,7 +7,7 @@ of SimpleScalar, LLC (info@simplescalar.com).
 
 sim: command line: /home/moorejar/public_html/public/CIS351/Executables/Simplescalar/bin/sim-cache -cache:dl1 dl1:64:16:1:l -redir:prog opt -redir:sim output_dl1:64:16:1:l /home/moorejar/public_html/public/CIS351/Lab_Cache/Tests/qsort/ss_qsort input_1e4 
 
-sim: simulation started @ Sun Dec  2 18:52:13 2018, options follow:
+sim: simulation started @ Mon Dec  3 15:27:45 2018, options follow:
 
 sim-cache: This simulator implements a functional cache simulator.  Cache
 statistics are generated for a user-selected cache and TLB configuration,
@@ -134,6 +134,6 @@ ld_target_big_endian              0 # target executable endian-ness, non-zero if
 mem.page_count                   67 # total number of pages allocated
 mem.page_mem                   268k # total size of memory pages allocated
 mem.ptab_misses                  67 # total first level page table misses
-mem.ptab_accesses         131761554 # total page table accesses
+mem.ptab_accesses         131761552 # total page table accesses
 mem.ptab_miss_rate           0.0000 # first level page table miss rate
 

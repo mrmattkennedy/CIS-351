@@ -83,7 +83,7 @@ def getData(hexData, binData):
             num_sets = int(blocks / way)               
             #set bit size = log base 2 (number of sets)
             set_bits_size = int(math.log(num_sets, 2)) 
-            ##00 + set bits
+            #00 + set bits
             tag_bits_offset = set_bits_size + 2         
             #number of bits in tag = 32 - set bits - 2 (for 00)
             tag_size = totalBits - tag_bits_offset      
